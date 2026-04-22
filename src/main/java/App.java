@@ -79,6 +79,7 @@ public class App {
         inventory.add(new Product(11,"eggs",7.50f));
         inventory.add(new Product(12,"Tooth Brush",14.5f));
         return inventory;*/
+
     } catch (IOException e) {
             throw new RuntimeException(e);
         }
