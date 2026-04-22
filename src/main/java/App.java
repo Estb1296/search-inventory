@@ -46,16 +46,42 @@ public class App {
             inventory.sort(Comparator.comparing(Product::getName));
 
             System.out.println("We carry the following inventory: ");
-            for (int i = 0; i < inventory.size(); i++) {
-                Product p = inventory.get(i);
-                System.out.printf("id: %d %s - Price: $%.2f%n",
-                        p.getId(), p.getName(), p.getPrice());
+
+            for (Product p : inventory) {
+                if(p != null) {
+                    try {
+                        String formattedLine = String.format("id: %d %s - Price: $%.2f%n",
+                                p.getId(), p.getName(), p.getPrice());
+                        writer.write(formattedLine);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
-        }
-        public static ArrayList<Product> getInventory() {
-            ArrayList<Product> inventory = new ArrayList<Product>();
-            // this method loads product objects into inventory
-            // and its details are not shown
-            return inventory;
+            writer.close();
+//        for (Employee employee : employees) {
+//            if (employee != null) {
+//                writer.write(employee.toprintString() + "\n");
+//            }
+
+    /*public static ArrayList<Product> getInventory() {  // Add <Product>
+        ArrayList<Product> inventory = new ArrayList<>();  // Add <Product>
+        inventory.add(new Product(1, "Laptop", 999.99f));
+        inventory.add(new Product(2, "Mouse", 29.99f));
+        inventory.add(new Product(3, "Keyboard", 79.99f));
+        inventory.add(new Product(4, "Monitor", 349.99f));
+        inventory.add(new Product(5, "USB Cable", 9.99f));
+        inventory.add(new Product(6, "Headphones", 149.99f));
+        inventory.add(new Product(7, "Webcam", 89.99f));
+        inventory.add(new Product(8, "External Hard Drive", 119.99f));
+        inventory.add(new Product(9, "Desk Lamp", 59.99f));
+        inventory.add(new Product(10, "Desk Chair", 299.99f));
+        inventory.add(new Product(11,"eggs",7.50f));
+        inventory.add(new Product(12,"Tooth Brush",14.5f));
+        return inventory;*/
+    } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
+}
+
