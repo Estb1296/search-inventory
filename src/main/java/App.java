@@ -178,10 +178,10 @@ Enter command (1-5):""");
     }
 
     public static void searchByPrice(Scanner input, ArrayList<Inventory> inventory) {
-        System.out.println("Enter minimum price:");
+        System.out.println("Enter minimum price you are looking for:");
         float minPrice = input.nextFloat();
 
-        System.out.println("Enter maximum price:");
+        System.out.println("Enter maximum price you are looking for:");
         float maxPrice = input.nextFloat();
         input.nextLine();
 
