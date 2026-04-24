@@ -17,5 +17,8 @@ public class Inventory {
         public float getPrice() {
             return this.price;
         }
+        public String toString(){
+        return "Id:"+id +"Product Name:"+name+"Price:"+price+"\n";
+        }
     }
 
