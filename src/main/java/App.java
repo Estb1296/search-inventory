@@ -3,10 +3,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.util.HashMap;
 
 public class App {
     public static void main(String[] args) {
         ArrayList<Inventory> inventory = new ArrayList<>();
+
         Scanner input = new Scanner(System.in);
 
         System.out.println("Enter the file name you want me to read from: ");
@@ -26,6 +28,7 @@ public class App {
         while(stopApp) {
             int command = MenuPrompt(input);
 
+            HashMap<String, ArrayList<Inventory>> inventoryByName = new HashMap<>();
             switch(command) {
                 case 1 -> {
                     try {
@@ -41,6 +44,7 @@ public class App {
                     System.out.println("Thank you for using the application!");
                     stopApp = false;
                 }
+                case 6 ->searchByName(input,inventoryByName);
                 default -> System.out.println("Invalid command. Please try again.");
             }
         }
@@ -56,7 +60,8 @@ public class App {
                 String[] parts = line.split("\\|");
 
                 int id = Integer.parseInt(parts[0].trim());
-                String name = parts[1].trim();
+                String name = parts[1].trim().toLowerCase();
+
                 float price = Float.parseFloat(parts[2].trim());
 
                 Inventory product = new Inventory(id, name, price);
@@ -127,7 +132,8 @@ What would you like to do?
 3 - Find products within price range
 4 - Add a new product
 5 - Quit the application
-Enter command (1-5):""");
+6 - Search by Name
+Enter command (1-6):""");
 
         boolean validInput = false;
         int command = 0;
@@ -137,7 +143,7 @@ Enter command (1-5):""");
                 command = input.nextInt();
                 input.nextLine();  // Clear buffer
 
-                if(command >= 1 && command <= 5) {
+                if(command >= 1 && command <= 6) {
                     validInput = true;
                 } else {
                     System.out.println("Please enter a number between 1 and 5.");
@@ -160,7 +166,7 @@ Enter command (1-5):""");
 
             boolean found = false;
             for(Inventory item : inventory) {
-                if(item != null && item.getId() == searchId) {
+                if(item.getId() == searchId) {
                     System.out.printf("Found: ID: %d | Name: %s | Price: $%.2f%n%n",
                             item.getId(), item.getName(), item.getPrice());
                     found = true;
@@ -222,6 +228,23 @@ Enter command (1-5):""");
         } catch(InputMismatchException e) {
             input.nextLine();
             System.out.println("Invalid input! Please try again.\n");
+        }
+    }
+    public static void searchByName(Scanner input,
+                                    HashMap<String, ArrayList<Inventory>> inventoryByName) {
+
+        System.out.println("Enter product name:");
+        String name = input.nextLine().trim().toLowerCase();
+        ArrayList<Inventory> results = inventoryByName.get(name);
+
+        if (results != null) {
+            for (Inventory item : results) {
+                System.out.printf("ID: %d | Name: %s | Price: $%.2f%n",
+                        item.getId(), item.getName(), item.getPrice());
+            }
+            System.out.println();
+        } else {
+            System.out.println("Product not found.\n");
         }
     }
 }

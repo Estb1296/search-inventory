@@ -20,5 +20,6 @@ public class Inventory {
         public String toString(){
         return "Id:"+id +"Product Name:"+name+"Price:"+price+"\n";
         }
+
     }
 
