@@ -5,10 +5,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class App {
     public static void main(String[] args) {
-        ArrayList<Product> inventory = new ArrayList<>();  // Initialize it!
+        ArrayList<Inventory> inventory = new ArrayList<>();  // Initialize it!
         Scanner input = new Scanner(System.in);
 
         System.out.println("Enter the file name you want me to read from");
@@ -46,6 +47,7 @@ public class App {
             inventory.sort(Comparator.comparing(Product::getName));
 
             System.out.println("We carry the following inventory: ");
+
 
             for (Product p : inventory) {
                 if(p != null) {
