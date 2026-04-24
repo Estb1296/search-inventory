@@ -32,7 +32,7 @@ public class App {
             switch(command) {
                 case 1 -> {
                     try {
-                        fileInputReader(reader, inventory, input);
+                        fileInputReader(reader, inventory, input,inventoryByName);
                     } catch (IOException e) {
                         System.out.println("Error reading file: " + e.getMessage());
                     }
@@ -52,7 +52,7 @@ public class App {
         input.close();
     }
 
-    public static void fileInputReader(BufferedReader reader, ArrayList<Inventory> inventory, Scanner input) throws IOException {
+    public static void fileInputReader(BufferedReader reader, ArrayList<Inventory> inventory, Scanner input, HashMap<String, ArrayList<Inventory>> inventoryByName) throws IOException {
         String line;
 
         try {
@@ -66,6 +66,7 @@ public class App {
 
                 Inventory product = new Inventory(id, name, price);
                 inventory.add(product);
+                inventoryByName.put(name,inventory);
                 System.out.println(line);
             }
         } catch (IOException e) {
@@ -215,7 +216,7 @@ Enter command (1-6):""");
             input.nextLine();
 
             System.out.println("Enter product name:");
-            String name = input.nextLine().trim();
+            String name = input.nextLine().trim().toLowerCase();
 
             System.out.println("Enter product price:");
             float price = input.nextFloat();
@@ -230,12 +231,12 @@ Enter command (1-6):""");
             System.out.println("Invalid input! Please try again.\n");
         }
     }
-    public static void searchByName(Scanner input,
-                                    HashMap<String, ArrayList<Inventory>> inventoryByName) {
+    public static void searchByName(Scanner input, HashMap<String, ArrayList<Inventory>> inventoryByName) {
 
         System.out.println("Enter product name:");
         String name = input.nextLine().trim().toLowerCase();
         ArrayList<Inventory> results = inventoryByName.get(name);
+        System.out.println(results);
 
         if (results != null) {
             for (Inventory item : results) {
